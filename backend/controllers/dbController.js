@@ -20,7 +20,7 @@ dbController.createUsers = async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  const text = "INSERT INTO users VALUES (6,$1,$2,$3,true)";
+  const text = "INSERT INTO users(username,email,password) VALUES ($1,$2,$3)";
 
   const value = [username, email, hashedPassword];
 
