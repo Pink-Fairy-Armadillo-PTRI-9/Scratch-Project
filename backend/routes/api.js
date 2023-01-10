@@ -9,7 +9,7 @@ router.post(
   dbController.getLandord,
   dbController.getReviews,
   (req, res) =>
-    res.status.json({
+    res.status(200).json({
       landlord: res.locals.landLord,
       reviews: res.locals.reviews,
     })

@@ -11,7 +11,7 @@ const saltRounds = 10;
 const dbController = {};
 
 dbController.createLandlord = (req, res, next) => {
-  const text = "INSERT INTO landlords(name) VALUES $1";
+  const text = "INSERT INTO landlords(name) VALUES ($1)";
 
   const value = [req.body.name];
   db.query(text, value)
@@ -76,7 +76,7 @@ dbController.postReviews = (req, res, next) => {
 
 dbController.getReviews = (req, res, next) => {
   const text =
-    "SELECT * FROM reviews INNER JOIN landlords ON reviews.landlord_id = $1";
+    "SELECT * FROM reviews INNER JOIN landlords ON landlords._id = $1";
   const value = [res.locals.landLord._id];
   db.query(text, value)
     .then((data) => {
