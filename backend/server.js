@@ -16,6 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "../frontend")));
 
 app.use("/api", apiRouter);
+// respond with the index.html when a GET request is made to the homepage
+app.get("/", (req, res) => {
+  res.sendFile("index.html");
+});
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>

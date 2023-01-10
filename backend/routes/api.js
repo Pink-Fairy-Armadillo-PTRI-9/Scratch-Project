@@ -4,12 +4,23 @@ const dbController = require("../controllers/dbController");
 
 const router = express.Router();
 
-router.post("/", dbController.getLandord, (req, res) =>
-  res.json(res.locals.landLord)
+router.post(
+  "/getlandlord",
+  dbController.getLandord,
+  dbController.getReviews,
+  (req, res) =>
+    res.status.json({
+      landlord: res.locals.landLord,
+      reviews: res.locals.reviews,
+    })
 );
 
-router.post("/login", (req, res) => res.status(200).json(res.locals.users));
+router.post("/createlandlord", dbController.createLandlord);
+
+router.post("/login", dbController.getUsers);
 
 router.post("/signup", dbController.createUsers);
+
+router.post("/postReviews", dbController.postReviews);
 
 module.exports = router;
