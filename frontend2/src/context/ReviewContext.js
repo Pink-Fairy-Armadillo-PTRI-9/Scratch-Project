@@ -2,55 +2,37 @@ import React from 'react'
 import { createContext, useReducer } from 'react'
 
 
-export const TasksContext = createContext()
+export const ReviewsContext = createContext()
 
-export const tasksReducer = (state, action) => {
+export const reviewsReducer = (state, action) => {
     switch(action.type) {
-        case 'SET_TASKS':
-            console.log(state)
+        case 'SET_REVIEWS':
+            console.log('set_reviews',state)
             return {
                 ...state,
-                tasks: action.payload
+                reviews: action.payload
             }
-        case 'CREATE_TASK':
-            console.log(state);
+        case 'CREATE_REVIEW':
+            console.log('create_review', state);
             return {
                 ...state,
-                tasks: [action.payload, ...state.tasks]
-            }
-        case 'COMPLETE_TASK':
-            console.log(state);
-            return {
-                ...state,
-                tasks: state.tasks.filter((task) => task._id !== action.payload._id)
-            }
-        case 'START_TIME':
-            console.log(state);
-            return {
-                ...state,
-                tasks: action.payload
-            }
-        case 'STOP_TIME':
-            console.log(state);
-            return {
-                ...state,
-                tasks: action.payload
+                reviews: [action.payload, ...state.tasks]
             }
         default:
             return state
     }
 }
 
-export const TasksContextProvider = ({ children }) => {
+export const ReviewsContextProvider = ({ children }) => {
 
-    const [state, dispatch] = useReducer(tasksReducer, {
+    const [state, dispatch] = useReducer(reviewsReducer, {
         tasks: null
     })
 
     return (
-        <TasksContext.Provider value={{...state, dispatch}}>
+        <ReviewsContext.Provider value={{...state, dispatch}}>
             { children }
-        </TasksContext.Provider>
+        </ReviewsContext.Provider>
     )
 }
 

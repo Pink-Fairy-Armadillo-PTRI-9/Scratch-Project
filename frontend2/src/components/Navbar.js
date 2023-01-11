@@ -1,24 +1,34 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../assets/Janus.png'
+import React from "react";
+import { Link } from "react-router-dom";
+// use hook to import context
+import Logo from "../assets/Logo.png";
 
 const Navbar = () => {
-    return (
-        <header>
-            <div className="container">
-            <img src={Logo} alt="Logo"></img>
-            <Link to="/">
-                <h1>Time-Tracking Todo List</h1>
-            </Link>
-            <Link to="/">
-                <h3>Home</h3>
-            </Link>
-            <Link to="/report">
-                <h3>Time-Report</h3>
-            </Link>
-            </div>
-        </header>
-    )
-}
+  const logoutFunction = () => {};
+  const loginFunction = () => {};
 
-export default Navbar
+  const checkLoginStatus = () => {
+    // preventDefault
+    return true;
+  };
+
+  const isLoggedIn = checkLoginStatus();
+
+  return (
+    <header>
+      <div className="container">
+        <Link to="/">
+          <h1>Rate My Landlord</h1>
+        </Link>
+        <Link to="/">
+          <h3>Home</h3>
+        </Link>
+        <button onClick={isLoggedIn ? logoutFunction : loginFunction}>
+          {isLoggedIn ? "Log Out" : "Log In"}
+        </button>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;

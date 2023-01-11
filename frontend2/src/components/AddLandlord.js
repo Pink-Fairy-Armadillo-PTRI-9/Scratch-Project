@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { useTasksContext } from '../hooks/useTasksContext'
+import { useLandlordsContext } from '../hooks/useLandlordsContext'
 
-const NewTaskForm = () => {
-    const { dispatch } = useTasksContext()
+const AddLandlord = () => {
+    const { dispatch } = useLandlordsContext()
     const [name, setName] = useState('')
-    const [category, setCategory] = useState('')
-    const [dueDate, setDueDate] = useState('')
+    const [address, setAddress] = useState('')
+    const [location, setLocation] = useState('')
     const [error, setError] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const task = {name, category, dueDate}
+        const landlord = {name, address, location}
 
-        const response = await fetch('http://localhost:3000/tasks/', {
+        const response = await fetch('http://localhost:3000/landlord/', {
             method: 'POST',
-            body: JSON.stringify(task),
+            body: JSON.stringify(landlord),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -27,44 +27,45 @@ const NewTaskForm = () => {
         }
         if (response.ok) {
             setName('')
-            setCategory('')
-            setDueDate('')
+            setAddress('')
+            setLocation('')
             setError(null)
-            console.log('new task added', json)
-            dispatch({type: 'CREATE_TASK', payload: json})
+            console.log('new landlord added', json)
+            dispatch({type: 'CREATE_LANDLORD', payload: json})
+            //!!!need to dispatch something here for state management!!!
         }
     }
 
     return (
         <form className="create" onSubmit={handleSubmit}>
-        <h3>Add a New Task</h3>
+        <h3>Add a New Landlord</h3>
 
-        <label>Task Name:</label>
+        <label>Landlord Name:</label>
         <input 
             type="text"
             onChange={(e)=> setName(e.target.value)} 
             value={name} 
         />
 
-        <label>Category:</label>
+        <label>Address of Residence:</label>
         <input 
             type="text"
             onChange={(e)=> setCategory(e.target.value)} 
-            value={category} 
+            value={address} 
         />
 
-        <label>Due Date:</label>
+        <label>Landlord's City:</label>
         <input 
             type="text"
             onChange={(e)=> setDueDate(e.target.value)} 
-            value={dueDate} 
+            value={location} 
         />
 
-        <button>Add Task</button>
+        <button>Submit Landlord</button>
         {error && <div className="error">{error}</div>}
      </form>
 
     )
 }
 
-export default NewTaskForm
+export default AddLandlord
