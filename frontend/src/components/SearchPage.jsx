@@ -3,62 +3,57 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import LandlordCard from './LandlordCard.jsx';
+import AddLandlord from './AddLandlord.jsx';
 
 class SearchPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      searchSuggestions: [], 
+      landlords: [{name: 'The Grinch', location: 'Whoville', rating: '5.0', rentAgain: '94%'}, {name: 'Jimmy Buffet', location: 'Margaritaville', rating: '4.2', rentAgain: '82%'}, {name: 'Rupert Holmes', location:'O\'Malley\'s Bar', rating: 'N/A', rentAgain: 'N/A'}, {name: 'Herman Melville', location: 'Nantucket', rating: '4.7', rentAgain: '85'}, {name: 'Elon Must', location: 'Edison', rating: '1.7', rentAgain: '27%'}],
+      searchBar: '', 
       searchResults: [], // { name: 'Boston Real Estate Management', averageRating: 4.3, city / primaryLocation: 'Boston, MA' }
     };
-    this.getSearchResults = this.getSearchResults.bind(this);
+  }
+  
+
+  componentDidMount() {
+    fetch('http://localhost:3000/api/')
+    .then(res => res.json())
+    .then(json => this.setState({landlords: json}))
+    .then(console.log('landlords in state', this.state.landlords))
   }
 
-  getSearchResults() {
-    // fetch('/api/search')
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     .....setState.....
-    //   })
-    //   .catch(err => console.log('Characters.getMoreCharacters: ERROR: ', err));
-
-    // mock database call:
-    const foundLandlords = [{
-      id: 12345,
-      name: 'Best Realty',
-      rating: 4.5
-    }, {
-      id: 67890,
-      name: 'ABC Property Management',
-      rating: 3.8
-    }];
-    this.setState({searchResults: foundLandlords});
-  }
 
   render() {
-    const landlords = this.state.searchResults;
+    const landlordsToRender = this.state.landlords.filter(landlord => landlord.name.toLowerCase().includes(this.state.searchBar) || landlord.location.toLowerCase().includes(this.state.searchBar))
+    console.log('render',landlordsToRender)
+    console.log('search', this.state.searchBar);
 
-    // if (!landlords.length) return (
-    //   <div>Sorry, no landlords found</div>
-    // );
-
-    const landlordCards = landlords.map(landlord => {
+    /* NEED TO HANDLE IF THERE ARE NO LANDLORDS WITH THAT NAME OR CITY AND ALSO EMPTY SEARCH BAR*/
+    const landlordCards = landlordsToRender.map(landlord => {
       return (
         <LandlordCard
           key={landlord.id}
           landlord={landlord}
         />
+        
       );
     });
 
     return (
       <section>
         <header>
-          <h2>Search Landlords</h2>
+          <h3>Search Landlords</h3>
         </header>
 
-        <h3>***our future search bar***</h3>
+        <h3>
+        <input
+        type="text"
+        onChange={e=> this.setState({searchBar: e.target.value})}
+        value={this.state.searchBar}
+        />
+        </h3>
 
         <div>
           {landlordCards}
@@ -69,14 +64,8 @@ class SearchPage extends Component {
           onClick={this.getSearchResults}
         >
           Search!
-        </button>    
-
-        <button
-          type="button"
-          // onClick={this.addLandlord}
-        >
-          Add landlord
-        </button>
+        </button> 
+        <AddLandlord/>
       </section>
     );
   }

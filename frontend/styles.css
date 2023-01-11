@@ -12,11 +12,12 @@ body {
   font-family: "Poppins";
 }
 img {
-  max-width:50px;
+  max-width:90px;
   margin: 20px;
 }
 header {
   background: rgb(40, 40, 40);
+  
 }
 header .container {
   max-width: 1400px;
@@ -30,11 +31,16 @@ header .container {
 header a {
   color:rgb(248, 213, 84);
   text-decoration: none;
-  font-size: small;
+  font-size: medium;
   margin: 12px;
 }
 header h3 {
   margin: 25px;
+}
+h3 input{
+  margin: 25px;
+  background-color: rgb(232, 232, 232);
+  color:#242424;
 }
 .pages{
   max-width: 1400px;
@@ -44,30 +50,34 @@ header h3 {
   align-items: center;
   
 }
+
 .home {
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 100px;
   }
-  .task-details {
+  .landlordCards {
     background: rgb(69, 69, 69);
     border-radius: 4px;
     margin: 20px auto;
     padding: 30px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+    width: 400px;
+    align-items: left;
   }
-  .task-details h4 {
+
+  .landlordCards h4 {
     margin: 0 90px 10px 0;
     font-size: 1.2em;
     color: rgb(255, 225, 105);
   }
-  .task-details p {
+  .landlordCards p {
     margin: 0;
     font-size: 0.9em;
     color: rgb(243, 237, 207);
   }
-  .task-details span {
+  .landlordCards span {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -78,17 +88,21 @@ header h3 {
     color: rgb(0,0,0);
     font-size: 13px;
   }
+  .landlordCards li {
+    color: rgb(232, 232, 232);
+    font-size: 17px;
+  }
 
-  .task-details input {
+  .landlordCards input {
     position: absolute;
     cursor: pointer;
     top: 27px;
     right: 10px;
   }
-  .task-details button {
+  .landlordCards button {
     position:absolute;
-    top: 60px;
-    right: 85px;
+    bottom: 10px;
+    right: 15px;
     background: rgb(243, 237, 207);
     cursor: pointer;
     border: 0;
@@ -96,12 +110,9 @@ header h3 {
     padding: 4px;
     font-family: "Poppins";
     border-radius: 6px;
-    font-size: 10px;
-    margin: 4px;
-    width: 20px;
-    height: 25px;
+    font-size: 14px;
   }
-  .task-details small {
+  .landlordCards small {
     position:absolute;
     margin: 0;
     font-size: 18px;
@@ -122,7 +133,7 @@ header h3 {
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
-    width: 100%;
+    width: 25%;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;

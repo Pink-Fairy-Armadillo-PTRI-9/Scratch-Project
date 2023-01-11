@@ -1,14 +1,14 @@
 //at the bottom of search results, display a new landlord form
 
 import React, { useState } from "react";
-import { useLandlordsContext } from "../../frontend2/src/hooks/useLandlordsContext";
+import {Link, Routes, Route, useNavigate} from 'react-router-dom'
 
 const AddLandlord = () => {
-  const { dispatch } = useLandlordsContext();
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -33,8 +33,7 @@ const AddLandlord = () => {
       setLocation("");
       setError(null);
       console.log("new landlord added", json);
-      dispatch({ type: "CREATE_LANDLORD", payload: json });
-      //!!!need to dispatch something here for state management!!!
+      navigate('/landlord/',json._id)
     }
   };
 

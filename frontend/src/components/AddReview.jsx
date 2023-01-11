@@ -2,16 +2,16 @@
 //if not logged in, prompt user in some way to log in/disallow entry of a new review
 
 import React, { useState } from 'react'
-import { useReviewContext } from '../hooks/useReviewerContext'
+import { render } from 'sass'
 
 const AddReview = () => {
-    const { dispatch } = useReviewContext()
     const [name, setName] = useState('')
     const [address, setAddress] = useState('') 
     const [rating, setRating] = useState('') //should be out of 5 (don't accept a value higher in submit, so throw error)
     const [rentAgain, setRentAgain] = useState('') //should be yes/no boolean
     const [text, setText] = useState('') // bigger text box
     const [date, setDate] = useState('') // MM/YY Format
+    const [submitted, setSubmitted] = useState(false)
     const [error, setError] = useState(null)
 
     const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ const AddReview = () => {
 
         const review = {name, address, rating, rentAgain, date}
 
-        const response = await fetch('http://localhost:3000/tasks/', {
+        const response = await fetch('http://localhost:3000/', {
             method: 'POST',
             body: JSON.stringify(review),
             headers: {
@@ -40,18 +40,13 @@ const AddReview = () => {
             setDate('')
             setError(null)
             console.log('new review added', json)
-            dispatch({type: 'CREATE_REVIEW', payload: json})
-            //!!!need to dispatch something here for state management!!!
+            setSubmitted(true);
+            setInterval(setSubmitted(false), 3000)
+            /*
+            should render something indicating success????
+            */
         }
     }
-
-            setName('')
-            setAddress('')
-            setRating('')
-            setRentAgain('')
-            setText('')
-            setDate('')
-            setError(null)
 
     return (
         <form className="create" onSubmit={handleSubmit}>
@@ -96,8 +91,9 @@ const AddReview = () => {
 
         <button>Submit Landlord</button>
         {error && <div className="error">{error}</div>}
-     </form>
 
+        {submitted && <h3>Submission success!</h3>} 
+     </form>
     )
 }
 

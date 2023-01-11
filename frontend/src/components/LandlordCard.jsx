@@ -8,10 +8,10 @@ const LandlordCard = ({
 }) => {
   return (
     // className="lanlord-search-results"
-    <article className="task-details">
+    <article className="landlordCards">
       <h4>{landlord.name}</h4>
       <ul>
-        <li><strong>Main City:</strong>{landlord.location}</li>
+        <li><strong>Main City: </strong>{landlord.location}</li>
         <li><strong>Average Rating: </strong>{landlord.rating}</li>
         <li><strong>Would Rent Again: </strong>{landlord.rentAgain}</li>
       </ul> 
