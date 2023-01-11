@@ -13,17 +13,28 @@ const dbController = {};
 dbController.createLandlord = (req, res, next) => {
   const text = "INSERT INTO landlords(name) VALUES ($1)";
 
-  const value = [req.body.name];
+  const value = [req.body.name.toLowerCase()];
   db.query(text, value)
     .then((data) => res.json("Landlord created"))
     .catch((err) => next(err));
 };
 
 dbController.getLandord = (req, res, next) => {
-  const text = "SELECT * FROM landlords WHERE name = $1";
-  const value = [req.body.name];
+  const text =
+    "select landlords.name, reviews.rating, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
+  const landlord = req.body.name.replace(
+    req.body.name[0],
+    req.body.name[0].toUpperCase()
+  );
+  const value = [landlord];
   db.query(text, value)
     .then((data) => {
+      //redirect to landlord submission page if landlord is not found
+      if (!data.rows[0]) return res.json("landlord not in database");
+      // ratings is the average of all the ratings from all reviews
+      const ratings = average(data.rows.map((el) => el["rating"]));
+      data.rows[0]["rating"] = ratings;
+      //pass the landlord card with name of landlord and the average ratings
       res.locals.landLord = data.rows[0];
       next();
     })
@@ -76,7 +87,7 @@ dbController.postReviews = (req, res, next) => {
 
 dbController.getReviews = (req, res, next) => {
   const text =
-    "SELECT * FROM reviews INNER JOIN landlords ON landlords._id = $1";
+    "SELECT reviews.*, users.username AS user FROM reviews INNER JOIN users ON reviews.user_id = users._id AND reviews.landlord_id = $1";
   const value = [res.locals.landLord._id];
   db.query(text, value)
     .then((data) => {
@@ -85,6 +96,11 @@ dbController.getReviews = (req, res, next) => {
     })
     .catch((err) => next(err));
 };
+
+function average(arr) {
+  const sum = arr.reduce((acc, cur) => acc + cur, 0);
+  return sum / arr.length;
+}
 
 module.exports = dbController;
 
