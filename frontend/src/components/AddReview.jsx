@@ -1,15 +1,11 @@
 //if logged in, renders form to submit new review to relevant landlord and updates review components
 //if not logged in, prompt user in some way to log in/disallow entry of a new review
 
-
-//at the bottom of search results, display a new landlord form
-
-
 import React, { useState } from 'react'
-import AddLandlord from './AddLandlord'
+import { useReviewContext } from '../hooks/useReviewerContext'
 
 const AddReview = () => {
-    // const { dispatch } = useTasksContext()
+    const { dispatch } = useReviewContext()
     const [name, setName] = useState('')
     const [address, setAddress] = useState('') 
     const [rating, setRating] = useState('') //should be out of 5 (don't accept a value higher in submit, so throw error)
@@ -43,13 +39,13 @@ const AddReview = () => {
             setText('')
             setDate('')
             setError(null)
-            console.log('new landlord added', json)
-            // dispatch({type: 'CREATE_TASK', payload: json})
+            console.log('new review added', json)
+            dispatch({type: 'CREATE_REVIEW', payload: json})
             //!!!need to dispatch something here for state management!!!
         }
     }
 
-    setName('')
+            setName('')
             setAddress('')
             setRating('')
             setRentAgain('')

@@ -17,6 +17,7 @@ const Navbar = () => {
   return (
     <header>
       <div className="container">
+        <img src={Logo} alt="Logo"></img>
         <Link to="/">
           <h1>Rate My Landlord</h1>
         </Link>
