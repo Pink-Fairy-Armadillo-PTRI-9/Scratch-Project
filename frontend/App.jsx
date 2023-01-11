@@ -21,21 +21,11 @@ class App extends Component {
     super(props);
 
     this.state = {
-        landlordData: [], // { name: 'Boston Real Estate Management', averageRating: 4.3, city / primaryLocation: 'Boston, MA' }
+        fetchedLandlords: false,
+        landlords: [], // @ pierce, @ mason: { name: 'Boston Real Estate Management', averageRating: 4.3, city / primaryLocation: 'Boston, MA' }
         isLoggedIn: false,
-        searchBarData: []
-        
-
-
-    //   characterIds: [],
-    //   fetchedChars: false,
-    //   charactersById: {},
-    //   favs: {},
-    //   nicknames: {},
-    //   fav_foods: {},
-    //   moreClicked: false,
+        searchBarData: [],
     };
-
     // this.updateFavs = this.updateFavs.bind(this);
     this.addLandlords = this.addLandlords.bind(this);
     // this.updateCharacter = this.updateCharacter.bind(this);
@@ -46,49 +36,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/')
-      .then(res => res.json())
+    fetch('/api/getLandlords') //route to get required data for home: landlords information—ratings, name, city
+      .then(res => res.json()) // should send an object called landlords
       .then(({ landlords }) => {
         // const { landlordIds, landlordNames } = this.formatLandlords(landlords);
         return this.setState({
-            searchBarData: landlords
+            fetchedLandlords: true,
+            landlordData: landlords,
         });
       })
       .catch(err => console.log('App.componentDidMount: get landlords: ERROR: ', err));
   }
 
-  formatLandlords(characters, state = this.state) {
-    // console.log('characters: ', characters);
-    const charactersById = JSON.parse(JSON.stringify(state.charactersById));
-    const fav_foods = JSON.parse(JSON.stringify(state.fav_foods));
-    const nicknames = JSON.parse(JSON.stringify(state.nicknames));
-    const characterIds = [...state.characterIds];
-    let newCharId = state.characterIds.length;
-
-    characters.forEach((char, index) => {
-      if (newCharId) char.id = ++newCharId;
-      else char.id = index+1;
-      if (!charactersById[char.id]) {
-        if (char.custom || newCharId) {
-          const { eye_color, hair_color, skin_color, birth_year } = char;
-          char.moreInfo = {eye_color, hair_color, skin_color, birth_year};
-        }
-        if (char.nickname && char.fav_food) {
-          fav_foods[char.id] = char.fav_food;
-          nicknames[char.id] = char.nickname;
-        }
-        characterIds.push(char.id);
-        charactersById[char.id] = char;
-      }
-    });
-    return { characterIds, charactersById, nicknames, fav_foods };
-  }
-
-  addLandlords(characters) {
-    const { characterIds, charactersById } = this.formatLandlords(characters);
-    this.setState({ characterIds, charactersById, fetchedChars: true });
-    return true;
-  }
 
   updateCharacter(id, character) {
     const charactersById = JSON.parse(JSON.stringify(this.state.charactersById));
@@ -122,9 +81,6 @@ class App extends Component {
     return true;
   }
 
-  updateFavs(favs) {
-    return this.setState({ favs });
-  }
 
   customizeCharacter(id, character) {
     const charactersById = JSON.parse(JSON.stringify(this.state.charactersById));
@@ -152,7 +108,7 @@ class App extends Component {
       </div>
     );
     const sharedPageProps = {
-      favs: this.state.favs,
+      landlords: this.state.landlords,
       nicknames: this.state.nicknames,
       fav_foods: this.state.fav_foods,
       characters: this.state.charactersById,
@@ -203,15 +159,24 @@ class App extends Component {
             />
             <Route
               exact
-              path="/customize/:id"
+              path="/landlord/:id"
               component={
-                () => <CustomizeCharacter
-                  {...sharedPageProps}
-                  customizeCharacter={this.customizeCharacter}
-                />
+                () => <LandlordPage
+                  {...sharedPageProps}/>
               }
             />
           </Switch>
+
+        <div className="home">
+        <div className="landlords">
+        {landlords && landlords.map((landlord)=> (
+            <Landlords key = {landlord._id} landlord={landlord}/>
+        ))}
+        </div>
+        <NewTask/>
+        </div>
+
+
         </main>
       </div>
     );

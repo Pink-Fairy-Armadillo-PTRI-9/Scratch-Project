@@ -1,13 +1,14 @@
 import React from 'react'
-import Report from '../components/Report'
+import Landlord from '../components/Landlord'
 
 
 const ReportPage = () => {
     return (
-        <div className="chart">
-        <Report/>
+        <div className="landlord">
+        <Landlord/>
+        <AddReview/>
         </div>
     )
 }
 
-export default ReportPage
+export default LandlordPage
