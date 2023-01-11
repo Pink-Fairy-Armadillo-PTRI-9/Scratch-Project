@@ -20,19 +20,24 @@ class App extends Component {
         searchBarData: [],
     };
     // this.updateFavs = this.updateFavs.bind(this);
-    this.addLandlords = this.addLandlords.bind(this);
+    // this.addLandlords = this.addLandlords.bind(this);
     // this.updateCharacter = this.updateCharacter.bind(this);
     // this.customizeCharacter = this.customizeCharacter.bind(this);
-    this.formatLandlords = this.formatLandlords.bind(this);
+    // this.formatLandlords = this.formatLandlords.bind(this);
     // this.deleteCharacter = this.deleteCharacter.bind(this);
     // this.getMoreClicked = this.getMoreClicked.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/getLandlords') //route to get required data for home: landlords information—ratings, name, city
+    fetch('/api/', {
+      method: 'POST',
+      body: JSON.stringify('Pierce'),
+      headers: { 'Content-Type': 'application/json' },
+    }) //route to get required data for home: landlords information—ratings, name, city
       .then(res => res.json()) // should send an object called landlords
-      .then(({ landlords }) => {
+      .then(({ landLord }) => {
         // const { landlordIds, landlordNames } = this.formatLandlords(landlords);
+        console.log('landLord: ', landLord);
         return this.setState({
             fetchedLandlords: true,
             landlordData: landlords,
@@ -131,7 +136,7 @@ class App extends Component {
                   {...sharedPageProps}/>
               }
             />
-          </Switch>
+          </Routes>
 
         <div className="home">
         <div className="landlords">
