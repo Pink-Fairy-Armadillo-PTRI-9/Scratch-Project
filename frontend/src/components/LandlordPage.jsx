@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const LandlordPage = ({ landlord }) => {
   const [landlordPage, setLandlordPage] = useState()
 
-  componentDidMount() {
+  useEffect(() => {
     fetch('/api/getlandlord/' + landlord._id)
     .then(res => res.json())
     .then(json => setLandlordPage(json))
     .then(console.log('landlord page in state', landlordPage))
-  }
+  }, []);
 
     return (
       <div className="container">
