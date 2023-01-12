@@ -1,14 +1,18 @@
 const db = require("../models");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-
-// function generateWebToken (id) {
-//   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-//     expiresIn: process.env.JWT_EXPIRY
-//   });
-// }
+require("dotenv").config();
 
 const dbController = {};
+
+dbController.getAll = (req, res, next) => {
+  const text = "SELECT * FROM landlords";
+
+  db.query(text)
+    .then((data) => res.json(data.rows))
+    .catch((err) => next(err));
+};
 
 dbController.createLandlord = (req, res, next) => {
   const text = "INSERT INTO landlords(name) VALUES ($1)";
@@ -19,12 +23,12 @@ dbController.createLandlord = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-dbController.getLandord = (req, res, next) => {
+dbController.getLandLord = (req, res, next) => {
   const text =
     "select landlords.name, reviews.rating, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
-  const landlord = req.body.name.replace(
-    req.body.name[0],
-    req.body.name[0].toUpperCase()
+  const landlord = req.params.id.replace(
+    req.params.id[0],
+    req.params.id[0].toUpperCase()
   );
   const value = [landlord];
   db.query(text, value)
@@ -62,9 +66,12 @@ dbController.getUsers = async (req, res, next) => {
 
   const user = (await db.query(text, value)).rows[0];
 
+  const token = generateToken(user._id);
+
   try {
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.json("user authenticated");
+      res.locals.id = token;
+      next();
     } else {
       res.json("email or password incorrect");
     }
@@ -102,6 +109,11 @@ function average(arr) {
   return sum / arr.length;
 }
 
+function generateToken(id) {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+}
 module.exports = dbController;
 
 // export const login = async (req, res) => {

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
 import Navbar from './components/Navbar.jsx'
 import Search from './components/Search.jsx' //characters
 import Landlord from './components/Landlord.jsx' 
@@ -9,57 +8,45 @@ import Landlord from './components/Landlord.jsx'
 import './styles.css';
 // https://www.npmjs.com/package/react-search-autocomplete
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+export default function App() {
 
-    this.state = {
-        searchResults: [], // { name: 'Boston Real Estate Management', averageRating: 4.3, city / primaryLocation: 'Boston, MA' }
-        isLoggedIn: false,
-        searchBarData: []
-    };
-  }
+  const [addFormData,setAddFormData] = useState({
+    email: "",
+    password: ""
+  });
 
-  render() {
-    return (
-      <div className="router">
-        <main>
-        <Navbar/>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={<Search/>}
-            />
-            <Route
-              exact
-              path="/landlord"
-              element={<Landlord/>}
-            />
-          </Routes>
-        </main>
-      </div>
-    );
-  }
+  
+  const handleFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...addFormData };
+
+    newFormData[fieldName] = fieldValue;
+
+    setAddFormData(newFormData);
+  };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   const newContact = {
+  //     email: addFormData.email,
+  //     password: addFormData.password,
+  //   };
+
+  //   const newContacts = [...contacts, newContact];
+  // };
+
+  return (
+    <div>
+      <form action="submit" >
+        <input type="text" value={addFormData.email} name="email" onChange={handleFormChange} placeholder="email"/>
+        <input type="text" value={addFormData.password} name="password"onChange={handleFormChange} placeholder="password"/>
+        <button>submit</button>
+      </form>
+    </div>
+  )
 }
-
-export default App;
-
-
-        // <div className = "App">
-        // <BrowserRouter>
-        // <Navbar/>
-        // <div className = "pages">
-        //     <Routes>
-        //         {/* <Route
-        //             path="/"
-        //             element={<Home />}
-        //         />
-        //         <Route
-        //             path="/landlord"
-        //             // element={<Landlord/>}
-        //         /> */}
-        //     </Routes>
-        // </div>
-        // </BrowserRouter>
-        // </div>
