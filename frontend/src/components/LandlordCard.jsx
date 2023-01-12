@@ -13,11 +13,11 @@ const LandlordCard = ({
       <ul>
         <li><strong>Main City: </strong>{landlord.location}</li>
         <li><strong>Average Rating: </strong>{landlord.rating}</li>
-        <li><strong>Would Rent Again: </strong></li>
+        <li><strong>Would Rent Again: </strong>{landlord.would_rent_again}</li>
       </ul> 
-      <Link to="/landlord">
+      <Link to='/landlord/'{landlord._id}>
         <button type="button">
-          See landlord details
+          See Landlord Reviews
         </button>
       </Link>
     </article>
