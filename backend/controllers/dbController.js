@@ -15,9 +15,10 @@ dbController.getAll = (req, res, next) => {
 };
 
 dbController.createLandlord = (req, res, next) => {
-  const text = "INSERT INTO landlords(name) VALUES ($1)";
+  const { location, name } = req.body;
+  const text = "INSERT INTO landlords(name, location) VALUES ($1,$2)";
 
-  const value = [req.body.name.toLowerCase()];
+  const value = [name, location];
   db.query(text, value)
     .then((data) => res.json("Landlord created"))
     .catch((err) => next(err));
@@ -60,17 +61,15 @@ dbController.createUsers = async (req, res, next) => {
 };
 
 dbController.getUsers = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
   const text = "SELECT * FROM users WHERE email = $1";
   const value = [email];
 
   const user = (await db.query(text, value)).rows[0];
 
-  const token = generateToken({ id: user._id, username: username });
-
   try {
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.locals.id = token;
+      res.locals.id = generateToken({ id: user._id, username: user.username });
       next();
     } else {
       res.json("email or password incorrect");
@@ -110,7 +109,7 @@ function average(arr) {
 }
 
 function generateToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+  return jwt.sign(id, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
 }

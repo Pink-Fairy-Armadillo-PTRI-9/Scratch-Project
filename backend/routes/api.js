@@ -2,6 +2,7 @@ const express = require("express");
 
 const dbController = require("../controllers/dbController");
 const cookieController = require("../controllers/cookieController");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -29,6 +30,6 @@ router.post(
 
 router.post("/signup", dbController.createUsers);
 
-router.post("/postReviews", dbController.postReviews);
+router.post("/postReviews", auth.verifyToken, dbController.postReviews);
 
 module.exports = router;
