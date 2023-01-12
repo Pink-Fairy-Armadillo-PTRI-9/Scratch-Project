@@ -64,28 +64,28 @@ const AddReview = () => {
         <label>Rating:</label>
         <input 
             type="text"
-            onChange={(e)=> setDueDate(e.target.value)} 
+            onChange={(e)=> setRating(e.target.value)} 
             value={rating} 
         />
 
         <label>Would You Rent Again?</label>
         <input 
             type="text"
-            onChange={(e)=> setDueDate(e.target.value)} 
+            onChange={(e)=> setRentAgain(e.target.value)} 
             value={rentAgain} 
         />
 
         <label>Comments:</label>
         <input 
             type="text"
-            onChange={(e)=> setDueDate(e.target.value)} 
+            onChange={(e)=> setText(e.target.value)} 
             value={text} 
         />
 
         <label>Date of Residency:</label>
         <input 
             type="text"
-            onChange={(e)=> setDueDate(e.target.value)} 
+            onChange={(e)=> setDate(e.target.value)} 
             value={date} 
         />
 

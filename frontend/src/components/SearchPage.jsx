@@ -18,10 +18,11 @@ class SearchPage extends Component {
   
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/')
+    fetch('http://localhost:3000/api/getall')
     .then(res => res.json())
-    .then(json => this.setState({landlords: json}))
-    .then(console.log('landlords in state', this.state.landlords))
+    // .then(json => this.setState({landlords: json}))
+    .then(json => console.log('json: ', json)) 
+    // .then(console.log('landlords in state', this.state.landlords))
   }
 
 

@@ -44,17 +44,10 @@ const AddLandlord = () => {
       <label>Landlord Name:</label>
       <input type="text" onChange={e => setName(e.target.value)} value={name} />
 
-      <label>Address of Residence:</label>
-      <input
-        type="text"
-        onChange={e => setCategory(e.target.value)}
-        value={address}
-      />
-
       <label>Landlord's City:</label>
       <input
         type="text"
-        onChange={e => setDueDate(e.target.value)}
+        onChange={e => setLocation(e.target.value)}
         value={location}
       />
 
