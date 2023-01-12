@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ReactModal from 'react-modal';
 import Navbar from './src/components/Navbar.jsx'
 import SearchPage from './src/components/SearchPage.jsx' // characters
 import LandlordPage from './src/components/LandlordPage.jsx' // customize character
+import Login from './src/components/Login.jsx'
+
 import './styles.css';
+
+// ReactModal.setAppElement('#root');
 
 class App extends Component {
   constructor(props) {
@@ -11,15 +16,21 @@ class App extends Component {
 
     this.state = {
         isLoggedIn: false,
+        modalIsOpen: false
     };
   }
+  
+  // toggleModal() {
+  //   this.setState({modalIsOpen: !this.state.modalIsOpen});
+  // }
+
 
   render() {
     return (
       <div className="router">
         <main>
-        <Navbar/>
-          <Routes>
+           <Navbar/> 
+           <Routes>
             <Route
               exact
               path="/"
@@ -30,8 +41,29 @@ class App extends Component {
               path="/landlord"
               element={<LandlordPage/>}
             />
+            <Route
+              exact
+              path="/login"
+              element={<Login/>}
+            />
           </Routes>
-        </main>
+
+          {/* // <div>
+          //   <button onClick={this.toggleModal}>Open Modal</button>
+          // <ReactModal 
+          //     isOpen={this.modalIsOpen}
+          //     show={true}
+          //     fade={false} 
+          //     onRequestClose={this.toggleModal}
+          //     contentLabel="Example Modal"
+          //     className="modal"
+          //     overlayClassName="overlay"
+          //   >
+          //     <h2>Hello</h2>
+          //     <button onClick={this.toggleModal}>close</button>
+          //   </ReactModal>
+          // </div> */}
+       </main>
       </div>
     );
   }
