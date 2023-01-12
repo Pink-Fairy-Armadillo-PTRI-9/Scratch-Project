@@ -2,12 +2,14 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const PORT = process.env.PORT || 3000;
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const apiRouter = require("./routes/api");
 //need for parsing the body of the request data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 /**
  * handle requests for static files
