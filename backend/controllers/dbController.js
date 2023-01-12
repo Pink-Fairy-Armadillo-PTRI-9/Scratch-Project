@@ -40,11 +40,8 @@ dbController.createLandlord = (req, res, next) => {
 
 dbController.getLandLord = (req, res, next) => {
   const text =
-    "select landlords.name, reviews.rating, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
-  const landlord = req.params.id.replace(
-    req.params.id[0],
-    req.params.id[0].toUpperCase()
-  );
+    "select landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
+  const landlord = req.params.id;
   const value = [landlord];
   db.query(text, value)
     .then((data) => {
@@ -52,7 +49,9 @@ dbController.getLandLord = (req, res, next) => {
       if (!data.rows[0]) return res.json("landlord not in database");
       // ratings is the average of all the ratings from all reviews
       const ratings = average(data.rows.map((el) => el["rating"]));
-      data.rows[0]["rating"] = ratings;
+      const rentAgain = average(data.rows.map((el) => el["would_rent_again"]));
+      data.rows[0]["rating"] = Number.parseFloat(ratings).toFixed(1);
+      data.rows[0]["would_rent_again"] = `${rentAgain * 100}%`;
       //pass the landlord card with name of landlord and the average ratings
       res.locals.landLord = data.rows[0];
       next();
