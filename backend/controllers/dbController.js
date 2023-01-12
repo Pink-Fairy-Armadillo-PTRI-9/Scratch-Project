@@ -48,6 +48,7 @@ dbController.getLandLord = (req, res, next) => {
       //redirect to landlord submission page if landlord is not found
       if (!data.rows[0]) return res.json("landlord not in database");
       // ratings is the average of all the ratings from all reviews
+      // rentAgain is the average of 1s and 0s from the would_rent_again column in all reviews
       const ratings = average(data.rows.map((el) => el["rating"]));
       const rentAgain = average(data.rows.map((el) => el["would_rent_again"]));
       data.rows[0]["rating"] = Number.parseFloat(ratings).toFixed(1);
@@ -127,20 +128,3 @@ function generateToken(id) {
   });
 }
 module.exports = dbController;
-
-// export const login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     const user = await User.findOne({ email: email });
-//     if (!user) return res.status(400).json({ msg: "User does not exist. " });
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
-
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-//     delete user.password;
-//     res.status(200).json({ token, user });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
