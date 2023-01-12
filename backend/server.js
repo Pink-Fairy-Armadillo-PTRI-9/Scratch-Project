@@ -4,7 +4,6 @@ const path = require("path");
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-
 const apiRouter = require("./routes/api");
 //need for parsing the body of the request data
 app.use(express.json());
@@ -17,9 +16,9 @@ app.use(express.static(path.resolve(__dirname, "../frontend")));
 
 app.use("/api", apiRouter);
 // respond with the index.html when a GET request is made to the homepage
-app.get("/", (req, res) => {
-  res.sendFile("index.html");
-});
+// app.get("/", (req, res) => {
+//   res.sendFile("./index.html");
+// });
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>

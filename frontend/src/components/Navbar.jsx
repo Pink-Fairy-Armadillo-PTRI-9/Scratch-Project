@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 // use hook to import context
 import Logo from "../assets/Logo.png";
 

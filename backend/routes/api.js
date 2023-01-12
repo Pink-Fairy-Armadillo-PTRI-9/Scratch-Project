@@ -1,12 +1,15 @@
 const express = require("express");
 
 const dbController = require("../controllers/dbController");
+const cookieController = require("../controllers/cookieController");
 
 const router = express.Router();
 
-router.post(
-  "/getlandlord",
-  dbController.getLandord,
+router.get("/getall", dbController.getAll);
+
+router.get(
+  "/getlandlord/:id",
+  dbController.getLandLord,
   dbController.getReviews,
   (req, res) =>
     res.status(200).json({
@@ -17,7 +20,12 @@ router.post(
 
 router.post("/createlandlord", dbController.createLandlord);
 
-router.post("/login", dbController.getUsers);
+router.post(
+  "/login",
+  dbController.getUsers,
+  cookieController.setSSIDCookie,
+  (req, res) => res.json("user authenicated!")
+);
 
 router.post("/signup", dbController.createUsers);
 
