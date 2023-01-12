@@ -10,7 +10,21 @@ dbController.getAll = (req, res, next) => {
   const text = "SELECT * FROM landlords";
 
   db.query(text)
-    .then((data) => res.json(data.rows))
+    .then(async (data) => {
+      const queryText =
+        "SELECT AVG(rating) FROM reviews where landlord_id = $1;";
+      const landLords = data.rows;
+      //this loop is to query each landlord's review and find the average of all their ratings
+      for (const person of landLords) {
+        const value = [person._id];
+        const average = (await db.query(queryText, value)).rows[0].avg;
+        //delcare a new property name averageRating in each landlord object and assign the average found
+        average === null
+          ? (person.averageRating = null)
+          : (person.averageRating = Number.parseFloat(average).toFixed(1));
+      }
+      res.json(landLords);
+    })
     .catch((err) => next(err));
 };
 
