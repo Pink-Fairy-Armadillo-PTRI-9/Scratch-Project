@@ -13,7 +13,7 @@ const LandlordCard = ({
       <ul>
         <li><strong>Main City: </strong>{landlord.location}</li>
         <li><strong>Average Rating: </strong>{landlord.rating}</li>
-        <li><strong>Would Rent Again: </strong>{landlord.rentAgain}</li>
+        <li><strong>Would Rent Again: </strong></li>
       </ul> 
       <Link to="/landlord">
         <button type="button">
