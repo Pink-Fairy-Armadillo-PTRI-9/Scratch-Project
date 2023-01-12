@@ -60,13 +60,13 @@ dbController.createUsers = async (req, res, next) => {
 };
 
 dbController.getUsers = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   const text = "SELECT * FROM users WHERE email = $1";
   const value = [email];
 
   const user = (await db.query(text, value)).rows[0];
 
-  const token = generateToken(user._id);
+  const token = generateToken({ id: user._id, username: username });
 
   try {
     if (user && (await bcrypt.compare(password, user.password))) {
