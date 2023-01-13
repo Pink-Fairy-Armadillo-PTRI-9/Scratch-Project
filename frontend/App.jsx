@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './src/components/Navbar.jsx'
-import SearchPage from './src/components/SearchPage.jsx' // characters
-import LandlordPage from './src/components/LandlordPage.jsx' // customize character
-import Login from './src/components/Login.jsx'
-import Signup from './src/components/Signup.jsx'
+import Navbar from './src/components/Navbar.jsx';
+import SearchPage from './src/components/SearchPage.jsx'; // characters
+import LandlordPage from './src/components/LandlordPage.jsx'; // customize character
+import Login from './src/components/Login.jsx';
+import Signup from './src/components/Signup.jsx';
 
-import './styles.css';
+// import './styles.css';
 
 // ReactModal.setAppElement('#root');
 
@@ -15,42 +15,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-        isLoggedIn: false,
-        modalIsOpen: false
+      isLoggedIn: false,
+      modalIsOpen: false,
     };
   }
-  
+
   // toggleModal() {
   //   this.setState({modalIsOpen: !this.state.modalIsOpen});
   // }
-
 
   render() {
     return (
       <div className="router">
         <main>
-           <Navbar/> 
-           <Routes>
-            <Route
-              exact
-              path="/"
-              element={<SearchPage/>}
-            />
-            <Route
-              exact
-              path="/landlord"
-              element={<LandlordPage/>}
-            />
-            <Route
-              exact
-              path="/login"
-              element={<Login/>}
-            />
-            <Route
-              exact
-              path="/signup"
-              element={<Signup/>}
-            />
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<SearchPage />} />
+            <Route exact path="/landlord" element={<LandlordPage />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/signup" element={<Signup />} />
           </Routes>
 
           {/* // <div>
@@ -68,7 +51,7 @@ class App extends Component {
           //     <button onClick={this.toggleModal}>close</button>
           //   </ReactModal>
           // </div> */}
-       </main>
+        </main>
       </div>
     );
   }

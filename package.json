@@ -39,9 +39,13 @@
     "css-loader": "^6.7.2",
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.20",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.0.2",
+    "postcss-preset-env": "^7.8.3",
     "sass": "^1.56.2",
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
+    "tailwindcss": "^3.2.4",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.11.1"
   }
