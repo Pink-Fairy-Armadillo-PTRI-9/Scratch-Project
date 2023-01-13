@@ -10,7 +10,7 @@ class SearchPage extends Component {
     super(props);
 
     this.state = {
-      landlords: [{name: 'The Grinch', location: 'Whoville', rating: '5.0', rentAgain: '94%'}, {name: 'Jimmy Buffet', location: 'Margaritaville', rating: '4.2', rentAgain: '82%'}, {name: 'Rupert Holmes', location:'O\'Malley\'s Bar', rating: 'N/A', rentAgain: 'N/A'}, {name: 'Herman Melville', location: 'Nantucket', rating: '4.7', rentAgain: '85'}, {name: 'Elon Must', location: 'Edison', rating: '1.7', rentAgain: '27%'}],
+      landlords: [],
       searchBar: '', 
       searchResults: [], // { name: 'Boston Real Estate Management', averageRating: 4.3, city / primaryLocation: 'Boston, MA' }
     };
@@ -18,10 +18,10 @@ class SearchPage extends Component {
   
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/getall')
+    fetch('/api/getall')
     .then(res => res.json())
-    // .then(json => this.setState({landlords: json}))
-    .then(json => console.log('json: ', json)) 
+    .then(json => this.setState({landlords: json}))
+    // .then(json => console.log('json: ', json)) 
     // .then(console.log('landlords in state', this.state.landlords))
   }
 
@@ -59,13 +59,6 @@ class SearchPage extends Component {
         <div>
           {landlordCards}
         </div>
-
-        <button
-          type="button"
-          onClick={this.getSearchResults}
-        >
-          Search!
-        </button> 
         <AddLandlord/>
       </section>
     );

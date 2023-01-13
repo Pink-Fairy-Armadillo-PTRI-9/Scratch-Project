@@ -8,7 +8,7 @@ const AddReview = () => {
     const [name, setName] = useState('')
     const [address, setAddress] = useState('') 
     const [rating, setRating] = useState('') //should be out of 5 (don't accept a value higher in submit, so throw error)
-    const [rentAgain, setRentAgain] = useState('') //should be yes/no boolean
+    const [rent_again, setRentAgain] = useState('') //should be yes/no boolean
     const [text, setText] = useState('') // bigger text box
     const [date, setDate] = useState('') // MM/YY Format
     const [submitted, setSubmitted] = useState(false)
@@ -17,7 +17,7 @@ const AddReview = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const review = {name, address, rating, rentAgain, date}
+        const review = {name, address, rating, rent_again, date}
 
         const response = await fetch('http://localhost:3000/', {
             method: 'POST',
@@ -72,7 +72,7 @@ const AddReview = () => {
         <input 
             type="text"
             onChange={(e)=> setRentAgain(e.target.value)} 
-            value={rentAgain} 
+            value={rent_again} 
         />
 
         <label>Comments:</label>

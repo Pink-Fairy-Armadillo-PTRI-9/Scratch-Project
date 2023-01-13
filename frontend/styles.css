@@ -12,7 +12,7 @@ body {
   font-family: "Poppins";
 }
 img {
-  max-width:50px;
+  max-width:80px;
   margin: 20px;
 }
 header {
@@ -49,7 +49,7 @@ header h3 {
     grid-template-columns: 3fr 1fr;
     gap: 100px;
   }
-  .task-details {
+  .landlordCards {
     background: rgb(69, 69, 69);
     border-radius: 4px;
     margin: 20px auto;
@@ -57,17 +57,17 @@ header h3 {
     position: relative;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   }
-  .task-details h4 {
+  .landlordCards h4 {
     margin: 0 90px 10px 0;
     font-size: 1.2em;
     color: rgb(255, 225, 105);
   }
-  .task-details p {
+  .landlordCards p {
     margin: 0;
     font-size: 0.9em;
     color: rgb(243, 237, 207);
   }
-  .task-details span {
+  .landlordCards span {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -79,13 +79,13 @@ header h3 {
     font-size: 13px;
   }
 
-  .task-details input {
+  .landlordCards input {
     position: absolute;
     cursor: pointer;
     top: 27px;
     right: 10px;
   }
-  .task-details button {
+  .landlordCards button {
     position:absolute;
     top: 60px;
     right: 85px;
@@ -101,13 +101,17 @@ header h3 {
     width: 20px;
     height: 25px;
   }
-  .task-details small {
+  .landlordCards small {
     position:absolute;
     margin: 0;
     font-size: 18px;
     color: rgb(243, 237, 207);
     top: 62.5px;
     right: 10px;
+  }
+  .landlordCards li {
+    color: rgb(243, 237, 207);
+    font-size: 14px;
   }
   label, h3 {
     color: rgb(255, 225, 105)

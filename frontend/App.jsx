@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ReactModal from 'react-modal';
 import Navbar from './src/components/Navbar.jsx'
 import SearchPage from './src/components/SearchPage.jsx' // characters
 import LandlordPage from './src/components/LandlordPage.jsx' // customize character
 import Login from './src/components/Login.jsx'
+import Signup from './src/components/Signup.jsx'
 
 import './styles.css';
 
@@ -45,6 +45,11 @@ class App extends Component {
               exact
               path="/login"
               element={<Login/>}
+            />
+            <Route
+              exact
+              path="/signup"
+              element={<Signup/>}
             />
           </Routes>
 

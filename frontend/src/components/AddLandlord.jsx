@@ -5,7 +5,6 @@ import {Link, Routes, Route, useNavigate} from 'react-router-dom'
 
 const AddLandlord = () => {
   const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -13,11 +12,11 @@ const AddLandlord = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const landlord = { name, address, location };
+    const landlord = { name, location };
 
-    const response = await fetch("http://localhost:3000/landlord/", {
+    const response = await fetch("api/createlandlord", {
       method: "POST",
-      body: JSON.stringify(landlord),
+      body: JSON.stringify(landlord), // { location: str, name: str }
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,7 +28,6 @@ const AddLandlord = () => {
     }
     if (response.ok) {
       setName("");
-      setAddress("");
       setLocation("");
       setError(null);
       console.log("new landlord added", json);
