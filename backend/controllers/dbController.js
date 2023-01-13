@@ -10,7 +10,7 @@ dbController.getAll = (req, res, next) => {
   const text = "SELECT * FROM landlords";
 
   db.query(text)
-    .then(async (data) => {
+    .then(async data => {
       const queryText =
         "SELECT AVG(rating) FROM reviews where landlord_id = $1;";
       const landLords = data.rows;
@@ -25,7 +25,7 @@ dbController.getAll = (req, res, next) => {
       }
       res.json(landLords);
     })
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };
 
 dbController.createLandlord = (req, res, next) => {
@@ -34,41 +34,41 @@ dbController.createLandlord = (req, res, next) => {
 
   const value = [name, location];
   db.query(text, value)
-    .then((data) => res.json("Landlord created"))
-    .catch((err) => next(err));
+    .then(data => res.json("Landlord created"))
+    .catch(err => next(err));
 };
 
 dbController.getLandLord = (req, res, next) => {
   const text =
-    "select landlords._id,landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
+    "select landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords._id = $1 AND reviews.landlord_id = $1";
   const landlord = req.params.id;
   const value = [landlord];
   db.query(text, value)
-    .then((data) => {
+    .then(data => {
       //redirect to landlord submission page if landlord is not found
       if (!data.rows[0]) return res.json("landlord not in database");
       // ratings is the average of all the ratings from all reviews
       // rentAgain is the average of 1s and 0s from the would_rent_again column in all reviews
-      const ratings = average(data.rows.map((el) => el["rating"]));
-      const rentAgain = average(data.rows.map((el) => el["would_rent_again"]));
+      const ratings = average(data.rows.map(el => el["rating"]));
+      const rentAgain = average(data.rows.map(el => el["would_rent_again"]));
       data.rows[0]["rating"] = Number.parseFloat(ratings).toFixed(1);
       data.rows[0]["would_rent_again"] = `${rentAgain * 100}%`;
       //pass the landlord card with name of landlord and the average ratings
       res.locals.landLord = data.rows[0];
       next();
     })
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };
 
 dbController.createUsers = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   db.query(`SELECT * FROM users where email = '${email}'`)
-    .then((data) => {
+    .then(data => {
       if (data.rows[0] !== undefined)
         return res.json({ error: "email has already been used" });
     })
-    .catch((err) => next(err));
+    .catch(err => next(err));
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -77,8 +77,8 @@ dbController.createUsers = async (req, res, next) => {
   const value = [username, email, hashedPassword];
 
   db.query(text, value)
-    .then((data) => res.json("user created"))
-    .catch((err) => next(err));
+    .then(_ => res.json("user created"))
+    .catch(err => next(err));
 };
 
 dbController.getUsers = async (req, res, next) => {
@@ -108,8 +108,8 @@ dbController.postReviews = (req, res, next) => {
   const value = [landlord_id, text, rating, would_rent_again, date, user_id];
 
   db.query(queryText, value)
-    .then((data) => res.json("review posted"))
-    .catch((err) => next(err));
+    .then(data => res.json("review posted"))
+    .catch(err => next(err));
 };
 
 dbController.getReviews = (req, res, next) => {
@@ -117,11 +117,11 @@ dbController.getReviews = (req, res, next) => {
     "SELECT reviews.*, users.username AS user FROM reviews INNER JOIN users ON reviews.user_id = users._id AND reviews.landlord_id = $1";
   const value = [res.locals.landLord._id];
   db.query(text, value)
-    .then((data) => {
+    .then(data => {
       res.locals.reviews = data.rows;
       next();
     })
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };
 
 function average(arr) {
