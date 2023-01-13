@@ -10,7 +10,21 @@ dbController.getAll = (req, res, next) => {
   const text = "SELECT * FROM landlords";
 
   db.query(text)
-    .then((data) => res.json(data.rows))
+    .then(async (data) => {
+      const queryText =
+        "SELECT AVG(rating) FROM reviews where landlord_id = $1;";
+      const landLords = data.rows;
+      //this loop is to query each landlord's review and find the average of all their ratings
+      for (const person of landLords) {
+        const value = [person._id];
+        const average = (await db.query(queryText, value)).rows[0].avg;
+        //delcare a new property name averageRating in each landlord object and assign the average found
+        average === null
+          ? (person.averageRating = null)
+          : (person.averageRating = Number.parseFloat(average).toFixed(1));
+      }
+      res.json(landLords);
+    })
     .catch((err) => next(err));
 };
 
@@ -26,19 +40,19 @@ dbController.createLandlord = (req, res, next) => {
 
 dbController.getLandLord = (req, res, next) => {
   const text =
-    "select landlords.name, reviews.rating, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
-  const landlord = req.params.id.replace(
-    req.params.id[0],
-    req.params.id[0].toUpperCase()
-  );
+    "select landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
+  const landlord = req.params.id;
   const value = [landlord];
   db.query(text, value)
     .then((data) => {
       //redirect to landlord submission page if landlord is not found
       if (!data.rows[0]) return res.json("landlord not in database");
       // ratings is the average of all the ratings from all reviews
+      // rentAgain is the average of 1s and 0s from the would_rent_again column in all reviews
       const ratings = average(data.rows.map((el) => el["rating"]));
-      data.rows[0]["rating"] = ratings;
+      const rentAgain = average(data.rows.map((el) => el["would_rent_again"]));
+      data.rows[0]["rating"] = Number.parseFloat(ratings).toFixed(1);
+      data.rows[0]["would_rent_again"] = `${rentAgain * 100}%`;
       //pass the landlord card with name of landlord and the average ratings
       res.locals.landLord = data.rows[0];
       next();
@@ -114,20 +128,3 @@ function generateToken(id) {
   });
 }
 module.exports = dbController;
-
-// export const login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     const user = await User.findOne({ email: email });
-//     if (!user) return res.status(400).json({ msg: "User does not exist. " });
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
-
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-//     delete user.password;
-//     res.status(200).json({ token, user });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
