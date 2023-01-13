@@ -40,7 +40,7 @@ dbController.createLandlord = (req, res, next) => {
 
 dbController.getLandLord = (req, res, next) => {
   const text =
-    "select landlords._id,landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
+    "select landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords._id = $1 AND reviews.landlord_id = $1";
   const landlord = req.params.id;
   const value = [landlord];
   db.query(text, value)

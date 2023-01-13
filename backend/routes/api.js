@@ -14,7 +14,6 @@ router.get(
   dbController.getReviews,
   (req, res) =>
     res.status(200).json({
-      id: res.locals.landlord._id,
       landlord: res.locals.landLord,
       reviews: res.locals.reviews,
     })
