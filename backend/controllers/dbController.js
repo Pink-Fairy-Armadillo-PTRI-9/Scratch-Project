@@ -40,7 +40,7 @@ dbController.createLandlord = (req, res, next) => {
 
 dbController.getLandLord = (req, res, next) => {
   const text =
-    "select landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
+    "select landlords._id,landlords.name, reviews.rating, reviews.would_rent_again, reviews.landlord_id as _id from reviews inner join landlords ON landlords.name = $1 AND reviews.landlord_id = landlords._id";
   const landlord = req.params.id;
   const value = [landlord];
   db.query(text, value)
@@ -62,6 +62,13 @@ dbController.getLandLord = (req, res, next) => {
 
 dbController.createUsers = async (req, res, next) => {
   const { username, email, password } = req.body;
+
+  db.query(`SELECT * FROM users where email = '${email}'`)
+    .then((data) => {
+      if (data.rows[0] !== undefined)
+        return res.json({ error: "email has already been used" });
+    })
+    .catch((err) => next(err));
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
