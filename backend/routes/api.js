@@ -14,6 +14,7 @@ router.get(
   dbController.getReviews,
   (req, res) =>
     res.status(200).json({
+      id: res.locals.landlord._id,
       landlord: res.locals.landLord,
       reviews: res.locals.reviews,
     })
@@ -27,6 +28,11 @@ router.post(
   cookieController.setSSIDCookie,
   (req, res) => res.json("user authenicated!")
 );
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("ssid");
+  res.json("logged out!");
+});
 
 router.post("/signup", dbController.createUsers);
 
