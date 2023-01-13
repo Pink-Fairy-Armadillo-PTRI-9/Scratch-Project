@@ -2,13 +2,13 @@
 //if not logged in, prompt user in some way to log in/disallow entry of a new review
 
 import React, { useState } from 'react'
-import { render } from 'sass'
 
 const AddReview = () => {
+    
     const [name, setName] = useState('')
     const [address, setAddress] = useState('') 
     const [rating, setRating] = useState('') //should be out of 5 (don't accept a value higher in submit, so throw error)
-    const [rent_again, setRentAgain] = useState('') //should be yes/no boolean
+    const [would_rent_again, setRentAgain] = useState('') //should be yes/no boolean
     const [text, setText] = useState('') // bigger text box
     const [date, setDate] = useState('') // MM/YY Format
     const [submitted, setSubmitted] = useState(false)
@@ -17,47 +17,45 @@ const AddReview = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const review = {name, address, rating, rent_again, date}
+        // const review = {name, address, rating, would_rent_again, date}
 
-        const response = await fetch('http://localhost:3000/', {
-            method: 'POST',
-            body: JSON.stringify(review),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const json = await response.json()
+        // const response = await fetch('http://localhost:3000/', {
+        //     method: 'POST',
+        //     body: JSON.stringify(review),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        // const json = await response.json()
 
-        if (!response.ok) {
-            setError(json.error);
-        }
-        if (response.ok) {
-            setName('')
-            setAddress('')
-            setRating('')
-            setRentAgain('')
-            setText('')
-            setDate('')
-            setError(null)
-            console.log('new review added', json)
-            setSubmitted(true);
-            setInterval(setSubmitted(false), 3000)
+        // if (!response.ok) {
+        //     setError(json.error);
+        // }
+        // if (response.ok) {
+        //     // landlord._id
+        //     // user._id from cookies?
+        //     setName('') 
+        //     setAddress('')
+        //     setRating('') // int
+        //     setRentAgain('') // 1 or 0
+        //     setText('') // str
+        //     setDate('') // str
+        //     setError(null)
+        //     console.log('new review added', json)
+        //     setSubmitted(true);
+        //     setInterval(setSubmitted(false), 3000)
             /*
             should render something indicating success????
             */
         }
-    }
 
     return (
-        <form className="create" onSubmit={handleSubmit}>
-        <h3>Add a New Landlord</h3>
-
-        <label>Landlord Name: {landlord.name}</label> 
-
-        <label>Address of Residence:</label>
+        <form className="add-review" onSubmit={handleSubmit}>
+            <p>Continue here</p>
+        {/* <label>Address of Residence:</label>
         <input 
             type="text"
-            onChange={(e)=> setCategory(e.target.value)} 
+            onChange={(e)=> setAddress(e.target.value)} 
             value={address} 
         />
 
@@ -92,9 +90,9 @@ const AddReview = () => {
         <button>Submit Landlord</button>
         {error && <div className="error">{error}</div>}
 
-        {submitted && <h3>Submission success!</h3>} 
+        {submitted && <h3>Submission success!</h3>}  */}
      </form>
     )
-}
+    }
 
 export default AddReview

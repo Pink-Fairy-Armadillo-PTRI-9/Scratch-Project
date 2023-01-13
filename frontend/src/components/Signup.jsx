@@ -11,7 +11,13 @@ async function signUp(credentials, navigate) {
   })
     .then(res => res.json())
     .then(data => {
-      if (data === 'user created') navigate('/login');
+      console.log('data: ', data);
+      if (data === 'user created') return navigate('/login');
+      Swal.fire(
+        'Sign Up Failed!',
+        'email already in use',
+        'error'
+      )
     })
  }
 

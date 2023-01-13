@@ -15,8 +15,9 @@ const LandlordCard = ({
         <li><strong>Average Rating: </strong>{landlord.rating}</li>
         <li><strong>Would Rent Again: </strong>{landlord.would_rent_again}</li>
       </ul> 
-      <Link to='/landlord/:id'>
-        <button type="button" id={landlord._id}>
+      {/* <Link to={`landlord/${landlord._id}`}> */}
+      <Link to='/landlord' state={{ id: landlord._id }}>
+        <button type="button">
           See Landlord Reviews
         </button>
       </Link>
