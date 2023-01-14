@@ -3,25 +3,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LandlordCard = ({
-  landlord
-}) => {
+const LandlordCard = ({ landlord }) => {
   return (
-    // className="lanlord-search-results"
-    <article className="landlordCards">
-      <h4>{landlord.name}</h4>
-      <ul>
-        <li><strong>Main City: </strong>{landlord.location}</li>
-        <li><strong>Average Rating: </strong>{landlord.rating}</li>
-        <li><strong>Would Rent Again: </strong>{landlord.would_rent_again}</li>
-      </ul> 
-      {/* <Link to={`landlord/${landlord._id}`}> */}
-      <Link to='/landlord' state={{ id: landlord._id }}>
-        <button type="button">
-          See Landlord Reviews
-        </button>
-      </Link>
-    </article>
+    <div className="landlordCards bg-secondary  p-4 rounded-md  text-gray-600 ">
+      <h4 className="font-bold text-xl">{landlord.name}</h4>
+      <td>
+        <div className="flex space-x-1">
+          <div className="font-medium">Location: </div>
+          <p> {landlord.location}</p>
+        </div>
+
+        <div className="flex ">
+          <div className="font-medium mr-1">Rating: </div>
+          {landlord.averageRating}
+        </div>
+      </td>
+
+      {/* <strong className="font-medium">Would Rent Again: </strong>
+        {landlord.would_rent_again} */}
+
+      <div className="flex flex-col items-end">
+        <Link
+          to="/landlord"
+          state={{ id: landlord._id }}
+          className="text-gray-800 text-md "
+        >
+          <button
+            type="button"
+            className="cursor-pointer w-full py-2 text-gray-600 hover:text-dark-purple"
+          >
+            See Landlord Reviews
+          </button>
+        </Link>
+      </div>
+    </div>
   );
 };
 

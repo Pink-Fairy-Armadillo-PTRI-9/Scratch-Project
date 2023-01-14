@@ -1,40 +1,47 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 // use hook to import context
-import Logo from "../assets/Logo.png";
+import Logo from '../assets/Logo.png';
 
 const Navbar = ({isLoggedIn}) => {
-  console.log('Navbar.jsx, isLoggedIn: ', isLoggedIn);
-  // const [authBtnProps, setAuthBtnProps] = useState({ text: '', route: ''});
-
-  // const toggleAuthBtn = (isLoggedIn) => {
-  //   setAuthBtnProps ({
-  //       text: isLoggedIn ? 'Log Out' : 'Log In',
-  //       route: isLoggedIn ? '/logout' : '/login'
-  //   });
-  // };
-
-  // toggleAuthBtn(isLoggedIn);
-
   const authBtnProps = {
     text: isLoggedIn ? 'Log Out' : 'Log In',
     route: isLoggedIn ? '/logout' : '/login'
   };
+  const loginFunction = () => {};
+
+  const checkLoginStatus = () => {
+    // preventDefault
+    return true;
+  };
+
+  const isLoggedIn = checkLoginStatus();
 
   return (
     <header>
-      <div className="container">
-        <img src={Logo} alt="Logo"></img>
-        <Link to="/">
-          <h1>Rate My Landlord</h1>
-        </Link>
-        <Link to="/">
-          <h3>Home</h3>
-        </Link>
-        {/* TO-DO: if logged in, display username */}
-        <Link to={`${authBtnProps.route}`}>
-          <button type='button'>{`${authBtnProps.text}`}</button>
-        </Link>    
+      <div className="bg-secondary">
+        <div className="max-w-screen-xl mx-auto p-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center sm:space-x-10 space-x-2">
+              <img className="h-12" src={Logo} alt="Logo"></img>
+              <Link to="/">
+                <h1 className="text-gray-600 py-2 hover:text-dark-purple font-semibold">
+                  Rate My Landlord
+                </h1>
+              </Link>
+            </div>
+            <div className="flex items-center sm:space-x-10 space-x-2">
+              <Link to="/">
+                <h3 className="text-gray-600 py-2 hover:text-dark-purple font-semibold">
+                  Home
+                </h3>
+              </Link>
+              <Link to={`${authBtnProps.route}`} className="text-gray-600  hover:text-dark-purple font-semibold ">
+                <button type='button' className=" bg-primary p-2 rounded sm:text-1xl">{`${authBtnProps.text}`}</button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
