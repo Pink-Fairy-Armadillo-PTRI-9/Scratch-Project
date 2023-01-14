@@ -25,7 +25,7 @@ router.post(
   "/login",
   dbController.getUsers,
   cookieController.setSSIDCookie,
-  (req, res) => req.status(200).json("user authenicated!")
+  (req, res) => res.status(200).json("user authenicated!")
 );
 
 router.post("/logout", (req, res) => {
