@@ -3,19 +3,12 @@ import { Link } from 'react-router-dom';
 // use hook to import context
 import Logo from '../assets/Logo.png';
 
-const Navbar = ({isLoggedIn}) => {
+const Navbar = ({ isLoggedIn }) => {
+
   const authBtnProps = {
     text: isLoggedIn ? 'Log Out' : 'Log In',
     route: isLoggedIn ? '/logout' : '/login'
   };
-  const loginFunction = () => {};
-
-  const checkLoginStatus = () => {
-    // preventDefault
-    return true;
-  };
-
-  const isLoggedIn = checkLoginStatus();
 
   return (
     <header>
