@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("fs");
 const path = require("path");
 const PORT = process.env.PORT || 3000;
 const cookieParser = require("cookie-parser");
@@ -17,15 +16,11 @@ app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "../frontend")));
 
 app.use("/api", apiRouter);
-// respond with the index.html when a GET request is made to the homepage
-// app.get("/", (req, res) => {
-//   res.sendFile("./index.html");
-// });
 
 // catch-all route handler for any requests to an unknown route
-app.use((req, res) => {
-  res.status(404).send("This is not the page you're looking for...");
-});
+app.use((req, res) =>
+  res.status(404).send("Page not found, please check your URL endpoints!")
+);
 /**
  * express error handler
  */
