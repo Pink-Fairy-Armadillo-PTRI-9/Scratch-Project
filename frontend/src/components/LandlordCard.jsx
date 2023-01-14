@@ -12,10 +12,10 @@ const LandlordCard = ({ landlord }) => {
           <div className="font-medium">Location: </div>
           <p> {landlord.location}</p>
         </div>
-
+        
         <div className="flex ">
           <div className="font-medium mr-1">Rating: </div>
-          {landlord.averageRating}
+          {landlord.averageRating ? landlord.averageRating : 'N/A'}
         </div>
       </td>
 
@@ -25,7 +25,7 @@ const LandlordCard = ({ landlord }) => {
       <div className="flex flex-col items-end">
         <Link
           to="/landlord"
-          state={{ id: landlord._id }}
+          state={{ landlord: landlord, from: 'LandlordCard' }}
           className="text-gray-800 text-md "
         >
           <button

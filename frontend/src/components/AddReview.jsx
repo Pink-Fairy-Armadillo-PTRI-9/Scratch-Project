@@ -2,11 +2,13 @@
 //if not logged in, prompt user in some way to log in/disallow entry of a new review
 
 import React, { useState } from 'react'
-
-const AddReview = () => {
+import Container from '../css/Container.jsx';
+import Submit from '../css/form/Submit.jsx';
+import Title from '../css/form/Title.jsx';
+import FormInput from '../css/form/FormInput.jsx';
+const AddReview = ({ landlord }) => {
     
-    const [name, setName] = useState('')
-    const [address, setAddress] = useState('') 
+    const [id, setId] = useState(landlord._id)
     const [rating, setRating] = useState('') //should be out of 5 (don't accept a value higher in submit, so throw error)
     const [would_rent_again, setRentAgain] = useState('') //should be yes/no boolean
     const [text, setText] = useState('') // bigger text box
@@ -16,83 +18,75 @@ const AddReview = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        would_rent_again === true ? setRentAgain(1) : setRentAgain(0)
+        const review = {id, text, rating, date, would_rent_again}
 
-        // const review = {name, address, rating, would_rent_again, date}
+        const response = await fetch('/api/postReviews', {
+            method: 'POST',
+            body: JSON.stringify(review),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
 
-        // const response = await fetch('http://localhost:3000/', {
-        //     method: 'POST',
-        //     body: JSON.stringify(review),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        // const json = await response.json()
-
-        // if (!response.ok) {
-        //     setError(json.error);
-        // }
-        // if (response.ok) {
-        //     // landlord._id
-        //     // user._id from cookies?
-        //     setName('') 
-        //     setAddress('')
-        //     setRating('') // int
-        //     setRentAgain('') // 1 or 0
-        //     setText('') // str
-        //     setDate('') // str
-        //     setError(null)
-        //     console.log('new review added', json)
-        //     setSubmitted(true);
-        //     setInterval(setSubmitted(false), 3000)
-            /*
-            should render something indicating success????
-            */
+        if (!response.ok) {
+            setError(json.error);
         }
-
-    return (
-        <form className="add-review" onSubmit={handleSubmit}>
-            <p>Continue here</p>
-        {/* <label>Address of Residence:</label>
-        <input 
-            type="text"
-            onChange={(e)=> setAddress(e.target.value)} 
-            value={address} 
-        />
-
-        <label>Rating:</label>
-        <input 
-            type="text"
-            onChange={(e)=> setRating(e.target.value)} 
-            value={rating} 
-        />
-
-        <label>Would You Rent Again?</label>
-        <input 
-            type="text"
-            onChange={(e)=> setRentAgain(e.target.value)} 
-            value={rent_again} 
-        />
-
-        <label>Comments:</label>
-        <input 
-            type="text"
-            onChange={(e)=> setText(e.target.value)} 
-            value={text} 
-        />
-
-        <label>Date of Residency:</label>
-        <input 
-            type="text"
-            onChange={(e)=> setDate(e.target.value)} 
-            value={date} 
-        />
-
-        <button>Submit Landlord</button>
-        {error && <div className="error">{error}</div>}
-
-        {submitted && <h3>Submission success!</h3>}  */}
-     </form>
-    )
+        if (response.ok) {
+            setRating('') // int
+            setRentAgain('') // 1 or 0
+            setText('') // str
+            setDate('') // str
+            setError(null)
+            console.log('new review added', json)
+            setSubmitted(true);
+            setInterval(setSubmitted(false), 3000)
+        }
     }
+    return (
+
+        <div className="inset-0  flex justify-center items-center ">
+            <Container>
+
+            {/* <div className=" bg-primary flex justify-center items-center h-screen -z-10 "> */}
+            <form
+                onSubmit={handleSubmit}
+                className={' bg-white drop-shadow rounded p-6 space-y-6 w-80'}
+            >
+          <Title>Add Review</Title>
+          <FormInput
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            label="Rating:"
+            placeholder="_"
+            name="rating"
+          />
+          <FormInput
+            value={would_rent_again}
+            onClick={(e) => setRentAgain(true)}
+            label="Rent Again"
+            placeholder="_"
+            name="RentAgain"
+            type="checkbox"
+          />
+          <FormInput
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            label="Comments"
+            placeholder="_"
+            name="Comments"
+            type="Text"
+          />
+          <Submit value="Submit" />
+        {error && <div className="error">{error}</div>}
+        {submitted && <h3>Submission success!</h3>}  
+        </form> 
+
+            </Container>
+            {error && <div className="error">{error}</div>}
+        </div> 
+    )
+}
 
 export default AddReview

@@ -33,8 +33,7 @@ export default function AddLandlord() {
       setName('');
       setLocation('');
       setError(null);
-      console.log('new landlord added', json);
-      navigate('/landlord/', json._id);
+      navigate('/landlord',{state:{landlord: json, from: 'AddLandlord'}});
     }
   };
 
