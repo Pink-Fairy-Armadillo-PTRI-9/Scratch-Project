@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-async function loginUser(credentials, navigate) {
+async function loginUser(credentials, navigate, updateLoginStatus, from) {
   return fetch('api/login', {
     method: 'POST',
     headers: {
@@ -11,24 +12,28 @@ async function loginUser(credentials, navigate) {
   })
     .then(res => res.json())
     .then(data => {
-      console.log('login data: ', data);
       if (data === 'user authenicated!') {
-        navigate(-1); // go back to the previous page
+        updateLoginStatus(true);
+        const destination = from === 'signup' ? '../' : -1;
+        navigate(destination);
       }
     })
  }
 
-export default function Login() {
+export default function Login({updateLoginStatus}) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
+  const location = useLocation();
+  let from;
+  if (location.state) from = location.state.from;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await loginUser({
       email,
       password
-    }, navigate);
+    }, navigate, updateLoginStatus, from);
   }
 
   return(
