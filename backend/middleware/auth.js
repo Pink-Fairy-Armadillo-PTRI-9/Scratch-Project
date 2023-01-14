@@ -13,7 +13,11 @@ auth.verifyToken = async (req, res, next) => {
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
 
+    const { id, username } = verified;
+
     req.user = verified;
+
+    res.locals.user = { userId: id, username: username };
 
     next();
   } catch (err) {

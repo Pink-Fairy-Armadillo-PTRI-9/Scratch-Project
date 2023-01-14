@@ -136,11 +136,11 @@ dbController.getUsers = async (req, res, next) => {
 };
 
 dbController.postReviews = (req, res, next) => {
-  const { landlord_id, text, rating, would_rent_again, date, user_id } =
-    req.body;
+  const { userId } = res.locals.user;
+  const { landlord_id, text, rating, would_rent_again, date } = req.body;
   const queryText =
     "INSERT INTO reviews (landlord_id, text, rating, would_rent_again, date, user_id) values($1,$2,$3,$4,$5,$6)";
-  const value = [landlord_id, text, rating, would_rent_again, date, user_id];
+  const value = [landlord_id, text, rating, would_rent_again, date, userId];
 
   db.query(queryText, value)
     .then((_) => res.status(200).json("review posted"))
