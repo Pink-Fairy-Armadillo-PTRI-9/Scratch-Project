@@ -25,17 +25,13 @@ dbController.getAll = (req, res, next) => {
       }
       res.status(200).json(landLords);
     })
-<<<<<<< HEAD
-    .catch(err => next(err));
-=======
-    .catch((err) =>
+    .catch(err =>
       next({
         log: "error caught in getAll middleware!",
         status: 400,
         message: { err: err },
       })
     );
->>>>>>> a4bc4ea68a5d72c492c5da6f94d5618b101194cb
 };
 
 dbController.createLandlord = (req, res, next) => {
@@ -44,19 +40,14 @@ dbController.createLandlord = (req, res, next) => {
 
   const value = [name, location];
   db.query(text, value)
-<<<<<<< HEAD
-    .then(data => res.json("Landlord created"))
-    .catch(err => next(err));
-=======
-    .then((_) => res.status(200).json("Landlord created"))
-    .catch((err) =>
+    .then(_ => res.status(200).json("Landlord created"))
+    .catch(err =>
       next({
         log: "error caught in createLandLord middleware!",
         status: 400,
         message: { err: err },
       })
     );
->>>>>>> a4bc4ea68a5d72c492c5da6f94d5618b101194cb
 };
 
 dbController.getLandLord = (req, res, next) => {
@@ -78,7 +69,7 @@ dbController.getLandLord = (req, res, next) => {
       res.locals.landLord = data.rows[0];
       next();
     })
-    .catch((err) =>
+    .catch(err =>
       next({
         log: "error caught in getLandLord middleware!",
         status: 400,
@@ -95,7 +86,7 @@ dbController.createUsers = async (req, res, next) => {
       if (data.rows[0] !== undefined)
         return res.status(400).json({ error: "email has already been used" });
     })
-    .catch((err) =>
+    .catch(err =>
       next({
         log: "error caught in createUsers middleware while checking the existence of the account in the database!",
         status: 400,
@@ -110,8 +101,8 @@ dbController.createUsers = async (req, res, next) => {
   const value = [username, email, hashedPassword];
 
   db.query(text, value)
-    .then((_) => res.status(200).json("user created"))
-    .catch((err) =>
+    .then(_ => res.status(200).json("user created"))
+    .catch(err =>
       next({
         log: "error caught in createUsers middleware while trying to insert new user data into database!",
         status: 400,
@@ -152,8 +143,8 @@ dbController.postReviews = (req, res, next) => {
   const value = [landlord_id, text, rating, would_rent_again, date, userId];
 
   db.query(queryText, value)
-    .then((_) => res.status(200).json("review posted"))
-    .catch((err) =>
+    .then(_ => res.status(200).json("review posted"))
+    .catch(err =>
       next({
         log: "error caught in postReviews middleware!",
         status: 400,
@@ -171,7 +162,7 @@ dbController.getReviews = (req, res, next) => {
       res.locals.reviews = data.rows;
       next();
     })
-    .catch((err) =>
+    .catch(err =>
       next({
         log: "error caught in getReviews middleware!",
         status: 400,
