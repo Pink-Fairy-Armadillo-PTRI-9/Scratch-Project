@@ -14,11 +14,9 @@ If the psql command isn't recognized, you'll need to add it to your PATH.
 Linux and Mac: add the line export PATH=$PATH:/Library/PostgreSQL/latest/bin to your ~/.bashrc or ~/.bash_profile, respectively, and restart your terminal. The exact path may vary so be sure to confirm the location of the postgresql binaries.
 Windows (native): go to the advanced system settings to modify the PATH environmental variable to include the bin directory within the postgresql install directory.
 Create an account on ElephantSQL
-Go to https://www.elephantsql.com/, create an account, and create a new database instance. Make sure to select the free 'Tiny Turtle' plan. Name your new database 'starwars'.
-Create db gif
+Go to https://www.elephantsql.com/, create an account, and create a new database instance. You can name your database whatever you want.g
 
 Grab the url of your new database so you can access it from the command line in your terminal.
-Copy url gif
 
 Create the tables and populate them with data
 From the command line in your terminal, make sure your pwd (present working directory) is the top level of this repo.
