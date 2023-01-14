@@ -6,8 +6,9 @@ module.exports = {
       colors: {
         primary: '#E8C2CA',
         secondary: '#F7D1CD',
-        'dark-subtle': 'rgba(255,255,255,0.5',
-        'light-subtle': 'rgba(39,39,39,0.5',
+        'dark-subtle': 'rgba(255,255,255,0.5)',
+        'light-subtle': 'rgba(39,39,39,0.5)',
+        'dark-purple': '#EC4067',
       },
     },
   },

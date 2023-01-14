@@ -5,7 +5,7 @@ import SearchPage from './src/components/SearchPage.jsx'; // characters
 import LandlordPage from './src/components/LandlordPage.jsx'; // customize character
 import Login from './src/components/Login.jsx';
 import Signup from './src/components/Signup.jsx';
-
+import AddLandlord from './src/components/AddLandlord.jsx';
 // import './styles.css';
 
 // ReactModal.setAppElement('#root');
@@ -34,6 +34,7 @@ class App extends Component {
             <Route exact path="/landlord" element={<LandlordPage />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
+            <Route exact path="/addlandlord" element={<AddLandlord />} />
           </Routes>
 
           {/* // <div>

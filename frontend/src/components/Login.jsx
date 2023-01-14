@@ -17,7 +17,7 @@ async function loginUser(credentials, navigate) {
     .then((data) => {
       console.log('login data: ', data);
       if (data === 'user authenicated!') {
-        navigate(-1); // go back to the previous page
+        navigate('/'); // go back to the previous page
       }
     });
 }
@@ -47,15 +47,20 @@ export default function Login() {
   };
 
   return (
-    <Container>
-      <div className=" bg-primary flex justify-center items-center h-screen -z-10 ">
-        <form onSubmit={handleSubmit} className={'space-y-6 w-72'}>
+    <div className="inset-0  flex justify-center items-center ">
+      <Container>
+        {/* <div className=" bg-primary flex justify-center items-center h-screen -z-10 "> */}
+
+        <form
+          onSubmit={handleSubmit}
+          className={' bg-white drop-shadow rounded p-6 space-y-6 w-80'}
+        >
           <Title>Sign in</Title>
           <FormInput
             value={email}
             onChange={handleChange}
             label="Email"
-            placeholder="test@email.com"
+            placeholder="email@email.com"
             name="email"
           />
           <FormInput
@@ -66,9 +71,18 @@ export default function Login() {
             name="password"
             type="password"
           />
-          <Submit value="Sign in" />
+          <Submit value="Submit" />
         </form>
-      </div>
-    </Container>
+
+        <button
+          type="submit"
+          className="w-full bg-white rounded text-gray-600 hover:bg-opacity-90 hover:text-dark-purple transition font-semibold text-lg cursor-pointer py-2"
+        >
+          <Link to="/signup">
+            <p>Sign up</p>
+          </Link>
+        </button>
+      </Container>
+    </div>
   );
 }
