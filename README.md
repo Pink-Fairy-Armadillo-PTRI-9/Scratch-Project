@@ -1,4 +1,4 @@
-# Scratch-Project
+# Scratch-Project instructions for setting up SQL
 
 #### Fork and clone this repo
 
