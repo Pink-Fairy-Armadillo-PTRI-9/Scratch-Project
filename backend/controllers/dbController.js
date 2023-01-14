@@ -23,9 +23,15 @@ dbController.getAll = (req, res, next) => {
           ? (person.averageRating = null)
           : (person.averageRating = Number.parseFloat(average).toFixed(1));
       }
-      res.json(landLords);
+      res.status(200).json(landLords);
     })
-    .catch((err) => next(err));
+    .catch((err) =>
+      next({
+        log: "error caught in getAll middleware!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 };
 
 dbController.createLandlord = (req, res, next) => {
@@ -34,8 +40,14 @@ dbController.createLandlord = (req, res, next) => {
 
   const value = [name, location];
   db.query(text, value)
-    .then((data) => res.json("Landlord created"))
-    .catch((err) => next(err));
+    .then((_) => res.status(200).json("Landlord created"))
+    .catch((err) =>
+      next({
+        log: "error caught in createLandLord middleware!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 };
 
 dbController.getLandLord = (req, res, next) => {
@@ -57,7 +69,13 @@ dbController.getLandLord = (req, res, next) => {
       res.locals.landLord = data.rows[0];
       next();
     })
-    .catch((err) => next(err));
+    .catch((err) =>
+      next({
+        log: "error caught in getLandLord middleware!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 };
 
 dbController.createUsers = async (req, res, next) => {
@@ -66,9 +84,15 @@ dbController.createUsers = async (req, res, next) => {
   db.query(`SELECT * FROM users where email = '${email}'`)
     .then((data) => {
       if (data.rows[0] !== undefined)
-        return res.json({ error: "email has already been used" });
+        return res.status(400).json({ error: "email has already been used" });
     })
-    .catch((err) => next(err));
+    .catch((err) =>
+      next({
+        log: "error caught in createUsers middleware while checking the existence of the account in the database!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -77,8 +101,14 @@ dbController.createUsers = async (req, res, next) => {
   const value = [username, email, hashedPassword];
 
   db.query(text, value)
-    .then((data) => res.json("user created"))
-    .catch((err) => next(err));
+    .then((_) => res.status(200).json("user created"))
+    .catch((err) =>
+      next({
+        log: "error caught in createUsers middleware while trying to insert new user data into database!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 };
 
 dbController.getUsers = async (req, res, next) => {
@@ -90,13 +120,18 @@ dbController.getUsers = async (req, res, next) => {
 
   try {
     if (user && (await bcrypt.compare(password, user.password))) {
+      //pass the web token to the next middleware to set it as a cookie for session control
       res.locals.id = generateToken({ id: user._id, username: user.username });
       next();
     } else {
       res.json("email or password incorrect");
     }
   } catch (err) {
-    next(err);
+    next({
+      log: "error caught in getUsers middleware!",
+      status: 400,
+      message: { err: err },
+    });
   }
 };
 
@@ -108,8 +143,14 @@ dbController.postReviews = (req, res, next) => {
   const value = [landlord_id, text, rating, would_rent_again, date, user_id];
 
   db.query(queryText, value)
-    .then((data) => res.json("review posted"))
-    .catch((err) => next(err));
+    .then((_) => res.status(200).json("review posted"))
+    .catch((err) =>
+      next({
+        log: "error caught in postReviews middleware!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 };
 
 dbController.getReviews = (req, res, next) => {
@@ -121,7 +162,13 @@ dbController.getReviews = (req, res, next) => {
       res.locals.reviews = data.rows;
       next();
     })
-    .catch((err) => next(err));
+    .catch((err) =>
+      next({
+        log: "error caught in getReviews middleware!",
+        status: 400,
+        message: { err: err },
+      })
+    );
 };
 
 function average(arr) {

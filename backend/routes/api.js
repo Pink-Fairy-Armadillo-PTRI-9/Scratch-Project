@@ -25,12 +25,12 @@ router.post(
   "/login",
   dbController.getUsers,
   cookieController.setSSIDCookie,
-  (req, res) => res.json("user authenicated!")
+  (req, res) => req.status(200).json("user authenicated!")
 );
 
 router.post("/logout", (req, res) => {
   res.clearCookie("ssid");
-  res.json("logged out!");
+  res.status(200).json("logged out!");
 });
 
 router.post("/signup", dbController.createUsers);
