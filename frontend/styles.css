@@ -1,0 +1,150 @@
+/* google font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* layout */
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+body {
+  background: #242424;
+  margin: 0;
+  font-family: "Poppins";
+}
+img {
+  max-width:80px;
+  margin: 20px;
+}
+header {
+  background: rgb(40, 40, 40);
+}
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  font-size: small;
+}
+header a {
+  color:rgb(248, 213, 84);
+  text-decoration: none;
+  font-size: small;
+  margin: 12px;
+}
+header h3 {
+  margin: 25px;
+}
+.pages{
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  
+}
+.home {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 100px;
+  }
+  .landlordCards {
+    background: rgb(69, 69, 69);
+    border-radius: 4px;
+    margin: 20px auto;
+    padding: 30px;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  }
+  .landlordCards h4 {
+    margin: 0 90px 10px 0;
+    font-size: 1.2em;
+    color: rgb(255, 225, 105);
+  }
+  .landlordCards p {
+    margin: 0;
+    font-size: 0.9em;
+    color: rgb(243, 237, 207);
+  }
+  .landlordCards span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    background: rgb(243, 237, 207);
+    padding: 6px;
+    border-radius: 50%;
+    color: rgb(0,0,0);
+    font-size: 13px;
+  }
+
+  .landlordCards input {
+    position: absolute;
+    cursor: pointer;
+    top: 27px;
+    right: 10px;
+  }
+  .landlordCards button {
+    position:absolute;
+    top: 60px;
+    right: 85px;
+    background: rgb(243, 237, 207);
+    cursor: pointer;
+    border: 0;
+    color: rgb(0, 0, 0);
+    padding: 4px;
+    font-family: "Poppins";
+    border-radius: 6px;
+    font-size: 10px;
+    margin: 4px;
+    width: 20px;
+    height: 25px;
+  }
+  .landlordCards small {
+    position:absolute;
+    margin: 0;
+    font-size: 18px;
+    color: rgb(243, 237, 207);
+    top: 62.5px;
+    right: 10px;
+  }
+  .landlordCards li {
+    color: rgb(243, 237, 207);
+    font-size: 14px;
+  }
+  label, h3 {
+    color: rgb(255, 225, 105)
+  }
+
+  label, input {
+    display: block;
+    color: rgb(243, 237, 207);
+    background: #242424;
+  }
+  input {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  form button {
+    background: rgb(255, 225, 105);
+    border: 0;
+    color: rgb(0,0,0);
+    padding: 10px;
+    font-family: "Poppins";
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  div.error {
+    padding: 10px;
+    background: #ffefef;
+    border: 1px solid var(--error);
+    color: var(--error);
+    border-radius: 4px;
+    margin: 20px 0;
+  }
